@@ -19,10 +19,8 @@ export const App = () => {
     return true;
   };
 
-  const saveContacts = () => {
+  const useSaveContacts = () =>
     localStorage.setItem('contacts', JSON.stringify(contacts));
-  };
-
   const addContact = ({ number, name, id }) => {
     if (checkContact(name))
       setContacts(prev => [...prev, { number, name, id }]);
@@ -33,16 +31,16 @@ export const App = () => {
   const removeFromContactsList = id =>
     setContacts(prev => prev.filter(e => e.id !== id));
 
-  const filterContacts = contacts =>
+  const useFilterContacts = contacts =>
     contacts.filter(({ name }) =>
       name.toLowerCase().includes(filter.toLowerCase())
     );
 
   useEffect(() => {
     console.log('done');
-    setFilteredContacts(filterContacts(contacts));
-    saveContacts();
-  }, [contacts, filter, saveContacts, setFilteredContacts, filterContacts]);
+    setFilteredContacts(useFilterContacts(contacts));
+    useSaveContacts();
+  }, [contacts, filter]);
 
   return (
     <div className="phonebook-box">
