@@ -19,8 +19,6 @@ export const App = () => {
     return true;
   };
 
-  const saveContacts = () =>
-    localStorage.setItem('contacts', JSON.stringify(contacts));
   const addContact = ({ number, name, id }) => {
     if (checkContact(name))
       setContacts(prev => [...prev, { number, name, id }]);
@@ -31,12 +29,15 @@ export const App = () => {
   const removeFromContactsList = id =>
     setContacts(prev => prev.filter(e => e.id !== id));
 
-  const filterContacts = contacts =>
-    contacts.filter(({ name }) =>
-      name.toLowerCase().includes(filter.toLowerCase())
-    );
-
   useEffect(() => {
+    const saveContacts = () =>
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+
+    const filterContacts = contacts =>
+      contacts.filter(({ name }) =>
+        name.toLowerCase().includes(filter.toLowerCase())
+      );
+
     console.log('done');
     setFilteredContacts(filterContacts(contacts));
     saveContacts();
